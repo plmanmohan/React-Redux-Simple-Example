@@ -1,15 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getData } from "../actions";
+
 export class Post extends Component {
-    construction() {
+    constructor() {
         super();
     }
     componentDidMount() {
+        console.log("Post....>")
         this.props.getData();
     }
 
     render() {
-        
+        return (
+            <ul className="list-group list-group-flush">
+                { this.props.articles.map (el =>
+                    <li className="list-group-item" key={el.id}>
+                        {el.title}
+                    </li>)}
+            </ul>
+        );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        articles: state.remoteArticles
+    };
+}
+export default connect(
+    mapStateToProps,
+    { getData }
+    )(Post);
